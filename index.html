@@ -7,32 +7,37 @@
 
 <!--
 =====================================================================
-  HOW TO ADD A TEXTURE PACK
-  1. Put the pack's .zip in the  downloads/  folder   (next to this file)
-  2. Put a screenshot in the     images/     folder
-  3. Copy one block in the PACKS list below, paste it at the TOP of
-     the list, and change the values. Save. Refresh the page. Done.
+  HOW TO ADD A TEXTURE PACK or a MOD
+  1. Put the .zip / .jar in the   downloads/   folder (next to this file)
+  2. Put a screenshot in the      images/      folder
+  3. Scroll to the PACKS or MODS list below, copy one { ... }, block,
+     paste it at the TOP of that list, change the values, save, refresh.
 
   Folder layout:
       index.html
-      downloads/  MyPack-1.0.zip
-      images/     mypack.png
+      downloads/  MyPack-1.0.zip   CoolMod-1.0.jar
+      images/     mypack.png       coolmod.png
 
-  Instead of a local file, "file" can also be a full link
-  (CurseForge, Modrinth, Google Drive, GitHub, ...).
+  "file" can also be a full link (CurseForge, Modrinth, GitHub, ...).
+  Link straight to a tab:  index.html#mods
 =====================================================================
 -->
 
 <style>
-:root{--bg:#f3f1ea;--card:#fff;--ink:#1d2417;--mut:#667060;--line:#dcd8cb;--acc:#4a9a2e;--acc2:#2f6f1b;--chip:#e9efe2}
-@media (prefers-color-scheme:dark){:root{--bg:#15190f;--card:#1f2517;--ink:#eef2e6;--mut:#a0aa94;--line:#2f3824;--acc:#6cc24a;--acc2:#8edb6c;--chip:#2a331f}}
+:root{--bg:#f3f1ea;--card:#fff;--ink:#1d2417;--mut:#667060;--line:#dcd8cb;--acc:#4a9a2e;--acc2:#2f6f1b;--chip:#e9efe2;--blue:#3b82c4}
+@media (prefers-color-scheme:dark){:root{--bg:#15190f;--card:#1f2517;--ink:#eef2e6;--mut:#a0aa94;--line:#2f3824;--acc:#6cc24a;--acc2:#8edb6c;--chip:#2a331f;--blue:#6aa9e0}}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:var(--blue)}
 header{padding:48px 20px 28px;text-align:center;border-bottom:4px solid var(--acc);background:repeating-conic-gradient(var(--chip) 0 25%,transparent 0 50%) 0 0/32px 32px}
 h1{margin:0;font:800 clamp(28px,6vw,46px)/1.1 "Courier New",monospace;letter-spacing:-1px}
-header p{margin:10px auto 0;max-width:560px;color:var(--mut)}
+header p{margin:10px auto 0;max-width:600px;color:var(--mut)}
 main{max-width:1100px;margin:0 auto;padding:20px}
 input,select{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px 11px}
+.tabs{display:flex;gap:8px;margin-bottom:16px}
+.tab{flex:1;max-width:220px;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:10px;font:700 16px inherit;font-family:inherit;cursor:pointer}
+.tab.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.tab small{opacity:.8;font-weight:500}
 .bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
 .bar input{flex:1 1 220px}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
@@ -43,41 +48,57 @@ input,select{font:inherit;color:var(--ink);background:var(--card);border:1px sol
 .shot{aspect-ratio:16/9;background:var(--chip) center/cover;display:flex;align-items:center;justify-content:center;font-size:40px}
 .body{padding:14px;display:flex;flex-direction:column;gap:8px;flex:1}
 .body h3{margin:0;font-size:19px}
+.by{font-size:13.5px;color:var(--mut);margin-top:-4px}
 .meta{display:flex;flex-wrap:wrap;gap:6px}
 .tag{background:var(--chip);border-radius:6px;padding:2px 8px;font-size:12.5px;color:var(--mut)}
 .tag.res{background:var(--acc);color:#fff;font-weight:700}
+.tag.ldr{background:var(--blue);color:#fff;font-weight:700}
 .desc{color:var(--mut);font-size:14.5px;margin:0;flex:1}
 .acts{display:flex;gap:8px;flex-wrap:wrap}
-.btn{display:inline-block;background:var(--acc);color:#fff;border-radius:8px;padding:9px 16px;font-weight:600;font-size:15px;text-decoration:none}
+.btn{display:inline-block;background:var(--acc);color:#fff;border:1px solid var(--acc);border-radius:8px;padding:9px 16px;font:600 15px inherit;font-family:inherit;text-decoration:none;cursor:pointer}
 .btn:hover{background:var(--acc2)}
-.btn.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.alt{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.alt:hover{background:var(--chip)}
 .empty{text-align:center;color:var(--mut);padding:60px 10px}
+dialog{border:1px solid var(--line);border-radius:14px;background:var(--bg);color:var(--ink);padding:22px;width:min(600px,94vw);max-height:90vh}
+dialog::backdrop{background:rgba(0,0,0,.55)}
+dialog h2{margin:0}
+dialog h4{margin:18px 0 6px;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut)}
+dialog ul{margin:0;padding-left:20px}
+dialog table{width:100%;border-collapse:collapse;font-size:14.5px}
+dialog td{padding:5px 0;border-bottom:1px solid var(--line)}
+dialog td:last-child{color:var(--mut);text-align:right}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-top:14px}
+.fact{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:14px}
+.fact span{display:block;font-size:11.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}
 footer{text-align:center;color:var(--mut);font-size:13px;padding:30px}
 </style>
 </head>
 <body>
 <header>
-  <h1>⛏ TEXTURE PACKS</h1>
-  <p>Every pack I've made, in one place. Pick one and grab the download. message me to request your pack on this site.</p>
+  <h1>⛏ PACKS &amp; MODS</h1>
+  <p>Every pack and mod I've made, in one place. Pick one and grab the download. message me to request your pack or mod on this site.</p>
 </header>
 <main>
+  <div class="tabs">
+    <button class="tab" id="tab-packs" data-tab="packs"></button>
+    <button class="tab" id="tab-mods" data-tab="mods"></button>
+  </div>
   <div class="bar">
-    <input id="q" type="search" placeholder="Search packs…">
-    <select id="sort">
-      <option value="list">Order in list</option>
-      <option value="az">A → Z</option>
-      <option value="res">Resolution</option>
-    </select>
+    <input id="q" type="search" placeholder="Search…">
+    <select id="author" hidden></select>
+    <select id="sort"></select>
   </div>
   <div class="chips" id="chips"></div>
   <div class="grid" id="grid"></div>
-  <div class="empty" id="empty" hidden>No packs found.</div>
+  <div class="empty" id="empty" hidden>Nothing found.</div>
 </main>
 <footer>Not affiliated with Mojang or Microsoft. Minecraft is a trademark of Mojang Studios.</footer>
+<dialog id="dlg"></dialog>
 
 <script>
 /* ===================================================================
-   EDIT HERE: your texture packs. Newest first (top of the list).
+   EDIT HERE: TEXTURE PACKS. Newest first (top of the list).
    Copy a { ... }, block, paste it above the others, change the values.
    Leave a field as "" if you don't need it.
    =================================================================== */
@@ -94,53 +115,141 @@ const PACKS = [
     file: "downloads/Hide bedrock.zip",    // e.g. "downloads/MyPack-1.0.zip" or a https:// link
   },
 ];
+
+/* ===================================================================
+   EDIT HERE: MODS. Newest first. Copy a { ... }, block to add one.
+   Every field is optional except name. Delete the example when done.
+   =================================================================== */
+const MODS = [
+  {
+    name: "Example Mod (delete me)",
+    description: "One or two sentences shown on the card.",
+    longDescription: "Longer text shown in the Details window. Explain features, how to use it, etc.",
+    author: "YourName",                    // main author (shown on the card + author filter)
+    authorUrl: "",                         // link to their profile, e.g. https://modrinth.com/user/YourName
+    contributors: [                        // everyone else who helped: shown in the Credits list
+      { name: "FriendName", role: "Textures", url: "" },
+      { name: "OtherPerson", role: "Testing", url: "" }
+    ],
+    version: "1.0.0",
+    mcVersion: "1.21.11",
+    loader: "Fabric",                      // Fabric, Forge, NeoForge, or Quilt
+    side: "Client",                        // Client, Server, or Both
+    license: "MIT",
+    updated: "2026-10-03",                 // YYYY-MM-DD, used for "Recently updated" sorting
+    tags: ["Utility", "QoL"],
+    requires: ["Fabric API"],              // dependencies
+    changelog: [
+      "1.0.0 - First release"
+    ],
+    image: "",                             // e.g. "images/coolmod.png"
+    file: "",                              // e.g. "downloads/CoolMod-1.0.0.jar" or a https:// link
+    file2: "", file2Label: "",             // optional 2nd download (e.g. a Forge build)
+    source: "",                            // link to source code (GitHub)
+    page: ""                               // link to its CurseForge / Modrinth page
+  },
+];
 /* =================================================================== */
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const keys = p => [p.resolution, p.edition, ...(p.tags || [])].filter(Boolean);
-let filter = "All";
+const u = s => /^\s*javascript:/i.test(s || "") ? "" : (s || "");           // block javascript: links
+const ext = s => /^https?:\/\//i.test(s);
+const dl = (s, label, cls = "") => s ? `<a class="btn ${cls}" href="${esc(u(s))}" ${ext(s) ? 'target="_blank" rel="noopener"' : "download"}>${label}</a>` : "";
+const link = (name, url) => url ? `<a href="${esc(u(url))}" target="_blank" rel="noopener">${esc(name)}</a>` : esc(name);
+
+const keysP = p => [p.resolution, p.edition, ...(p.tags || [])].filter(Boolean);
+const keysM = m => [m.loader, m.side, m.mcVersion && "MC " + m.mcVersion, ...(m.tags || [])].filter(Boolean);
+const SORTS = {
+  packs: [["list", "Order in list"], ["az", "A → Z"], ["res", "Resolution"]],
+  mods:  [["list", "Order in list"], ["az", "A → Z"], ["new", "Recently updated"], ["author", "Author"]]
+};
+let tab = location.hash === "#mods" ? "mods" : "packs", filter = "All", visibleMods = [];
+
+function setTab(t) {
+  tab = t; filter = "All"; $("q").value = "";
+  history.replaceState(null, "", t === "mods" ? "#mods" : location.pathname + location.search);
+  $("sort").innerHTML = SORTS[t].map(([v, l]) => `<option value="${v}">${l}</option>`).join("");
+  const authors = [...new Set(MODS.map(m => m.author).filter(Boolean))].sort();
+  $("author").innerHTML = `<option value="">All authors</option>` + authors.map(a => `<option>${esc(a)}</option>`).join("");
+  $("author").hidden = t !== "mods" || authors.length < 2;
+  render();
+}
 
 function render() {
-  const q = $("q").value.toLowerCase().trim();
-  const all = ["All", ...new Set(PACKS.flatMap(keys))];
-  $("chips").innerHTML = all.map(t =>
-    `<button class="chip${t === filter ? " on" : ""}" data-t="${esc(t)}">${esc(t)}</button>`).join("");
+  $("tab-packs").innerHTML = `Texture Packs <small>(${PACKS.length})</small>`;
+  $("tab-mods").innerHTML = `Mods <small>(${MODS.length})</small>`;
+  $("tab-packs").classList.toggle("on", tab === "packs");
+  $("tab-mods").classList.toggle("on", tab === "mods");
 
-  let list = PACKS.filter(p =>
-    (filter === "All" || keys(p).includes(filter)) &&
-    (!q || [p.name, p.description, ...(p.tags || [])].join(" ").toLowerCase().includes(q)));
+  const data = tab === "mods" ? MODS : PACKS, keys = tab === "mods" ? keysM : keysP;
+  const q = $("q").value.toLowerCase().trim(), au = $("author").value, s = $("sort").value;
+  const all = ["All", ...new Set(data.flatMap(keys))];
+  if (!all.includes(filter)) filter = "All";
+  $("chips").innerHTML = all.map(t => `<button class="chip${t === filter ? " on" : ""}" data-t="${esc(t)}">${esc(t)}</button>`).join("");
 
-  const s = $("sort").value;
+  let list = data.filter(x =>
+    (filter === "All" || keys(x).includes(filter)) &&
+    (tab !== "mods" || !au || x.author === au) &&
+    (!q || [x.name, x.description, x.author, ...(x.tags || [])].join(" ").toLowerCase().includes(q)));
   if (s === "az") list = [...list].sort((a, b) => a.name.localeCompare(b.name));
   if (s === "res") list = [...list].sort((a, b) => parseInt(b.resolution) - parseInt(a.resolution));
+  if (s === "new") list = [...list].sort((a, b) => (b.updated || "").localeCompare(a.updated || ""));
+  if (s === "author") list = [...list].sort((a, b) => (a.author || "").localeCompare(b.author || ""));
+  visibleMods = tab === "mods" ? list : [];
 
-  $("grid").innerHTML = list.map(p => `
+  $("grid").innerHTML = list.map((x, i) => `
     <article class="card">
-      <div class="shot"${p.image ? ` style="background-image:url('${esc(p.image)}')"` : ""}>${p.image ? "" : "🧱"}</div>
+      <div class="shot"${x.image ? ` style="background-image:url('${esc(u(x.image))}')"` : ""}>${x.image ? "" : tab === "mods" ? "⚙️" : "🧱"}</div>
       <div class="body">
-        <h3>${esc(p.name)}</h3>
+        <h3>${esc(x.name)}</h3>
+        ${tab === "mods" && x.author ? `<div class="by">by ${link(x.author, x.authorUrl)}</div>` : ""}
         <div class="meta">
-          ${p.resolution ? `<span class="tag res">${esc(p.resolution)}</span>` : ""}
-          ${p.mcVersion ? `<span class="tag">MC ${esc(p.mcVersion)}</span>` : ""}
-          ${p.edition ? `<span class="tag">${esc(p.edition)}</span>` : ""}
-          ${p.version ? `<span class="tag">v${esc(p.version)}</span>` : ""}
-          ${(p.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join("")}
+          ${tab === "mods"
+            ? `${x.loader ? `<span class="tag ldr">${esc(x.loader)}</span>` : ""}${x.mcVersion ? `<span class="tag">MC ${esc(x.mcVersion)}</span>` : ""}${x.side ? `<span class="tag">${esc(x.side)}</span>` : ""}`
+            : `${x.resolution ? `<span class="tag res">${esc(x.resolution)}</span>` : ""}${x.mcVersion ? `<span class="tag">MC ${esc(x.mcVersion)}</span>` : ""}${x.edition ? `<span class="tag">${esc(x.edition)}</span>` : ""}`}
+          ${x.version ? `<span class="tag">v${esc(x.version)}</span>` : ""}
+          ${(x.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join("")}
         </div>
-        <p class="desc">${esc(p.description)}</p>
+        <p class="desc">${esc(x.description)}</p>
         <div class="acts">
-          ${p.file ? `<a class="btn" href="${esc(p.file)}" download>⬇ Download</a>` : ""}
-          ${p.file2 ? `<a class="btn alt" href="${esc(p.file2)}" download>⬇ ${esc(p.file2Label || "Alt")}</a>` : ""}
+          ${dl(x.file, "⬇ Download")}${dl(x.file2, "⬇ " + esc(x.file2Label || "Alt"), "alt")}
+          ${tab === "mods" ? `<button class="btn alt" data-i="${i}">Details</button>` : ""}
         </div>
       </div>
     </article>`).join("");
   $("empty").hidden = list.length > 0;
 }
 
+function details(m) {
+  const fact = (k, v) => v ? `<div class="fact"><span>${k}</span>${esc(v)}</div>` : "";
+  const people = [];
+  if (m.author) people.push([m.author, "Author", m.authorUrl]);
+  (m.contributors || []).forEach(c => people.push([c.name, c.role || "Contributor", c.url]));
+  $("dlg").innerHTML = `
+    <h2>${esc(m.name)}</h2>
+    ${m.author ? `<div class="by" style="margin:2px 0 0">by ${link(m.author, m.authorUrl)}</div>` : ""}
+    <p>${esc(m.longDescription || m.description)}</p>
+    <div class="facts">${fact("Version", m.version)}${fact("Minecraft", m.mcVersion)}${fact("Loader", m.loader)}${fact("Runs on", m.side)}${fact("License", m.license)}${fact("Updated", m.updated)}</div>
+    ${(m.requires || []).length ? `<h4>Requires</h4><ul>${m.requires.map(r => `<li>${esc(r)}</li>`).join("")}</ul>` : ""}
+    ${people.length ? `<h4>Credits</h4><table>${people.map(p => `<tr><td>${link(p[0], p[2])}</td><td>${esc(p[1])}</td></tr>`).join("")}</table>` : ""}
+    ${(m.changelog || []).length ? `<h4>Changelog</h4><ul>${m.changelog.map(c => `<li>${esc(c)}</li>`).join("")}</ul>` : ""}
+    <div class="acts" style="margin-top:20px">
+      ${dl(m.file, "⬇ Download")}${dl(m.file2, "⬇ " + esc(m.file2Label || "Alt"), "alt")}
+      ${m.page ? `<a class="btn alt" href="${esc(u(m.page))}" target="_blank" rel="noopener">Mod page</a>` : ""}
+      ${m.source ? `<a class="btn alt" href="${esc(u(m.source))}" target="_blank" rel="noopener">Source code</a>` : ""}
+      <button class="btn alt" style="margin-left:auto" onclick="$('dlg').close()">Close</button>
+    </div>`;
+  $("dlg").showModal();
+}
+
+document.querySelectorAll(".tab").forEach(b => b.onclick = () => setTab(b.dataset.tab));
 $("chips").onclick = e => { const b = e.target.closest("[data-t]"); if (b) { filter = b.dataset.t; render(); } };
-$("q").oninput = render;
-$("sort").onchange = render;
-render();
+$("grid").onclick = e => { const b = e.target.closest("[data-i]"); if (b) details(visibleMods[+b.dataset.i]); };
+$("dlg").onclick = e => { if (e.target === $("dlg")) $("dlg").close(); };
+$("q").oninput = render; $("sort").onchange = render; $("author").onchange = render;
+window.onhashchange = () => setTab(location.hash === "#mods" ? "mods" : "packs");
+setTab(tab);
 </script>
 </body>
 </html>
