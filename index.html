@@ -29,7 +29,9 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
 a{color:var(--blue)}
-header{padding:48px 20px 28px;text-align:center;border-bottom:4px solid var(--acc);background:repeating-conic-gradient(var(--chip) 0 25%,transparent 0 50%) 0 0/32px 32px}
+.contact{position:absolute;top:14px;right:16px;background:var(--acc);color:#fff;border-radius:8px;padding:8px 16px;font-weight:700;font-size:14.5px;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.contact:hover{background:var(--acc2)}
+header{position:relative;padding:48px 20px 28px;text-align:center;border-bottom:4px solid var(--acc);background:repeating-conic-gradient(var(--chip) 0 25%,transparent 0 50%) 0 0/32px 32px}
 h1{margin:0;font:800 clamp(28px,6vw,46px)/1.1 "Courier New",monospace;letter-spacing:-1px}
 header p{margin:10px auto 0;max-width:600px;color:var(--mut)}
 main{max-width:1100px;margin:0 auto;padding:20px}
@@ -76,6 +78,7 @@ footer{text-align:center;color:var(--mut);font-size:13px;padding:30px}
 </head>
 <body>
 <header>
+  <a class="contact" href="https://contact.mcpacks.site" target="_blank" rel="noopener">Contact Us</a>
   <h1>⛏ PACKS &amp; MODS</h1>
   <p>Every pack and mod I've made, in one place. Pick one and grab the download. message me to request your pack or mod on this site.</p>
 </header>
