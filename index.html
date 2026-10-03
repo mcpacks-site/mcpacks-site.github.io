@@ -108,6 +108,8 @@ footer{text-align:center;color:var(--mut);font-size:13px;padding:30px}
 const PACKS = [
   {
     name: "Hide bedrock",
+    author: "Zacharyvr22",                  // who made it (shown as "by ..." + author filter)
+    authorUrl: "",                         // optional link to their profile/page
     description: "This just hides bedrock. thats all...",
     resolution: "16x",
     version: "1",
@@ -131,8 +133,8 @@ const MODS = [
     author: "YourName",                    // main author (shown on the card + author filter)
     authorUrl: "",                         // link to their profile, e.g. https://modrinth.com/user/YourName
     contributors: [                        // everyone else who helped: shown in the Credits list
-      { name: "FriendName", role: "Textures", url: "" },
-      { name: "OtherPerson", role: "Testing", url: "" }
+      { name: "zacharyvr", role: "Textures", url: "" },
+      { name: "zacharyvr", role: "Testing", url: "" }
     ],
     version: "1.0.0",
     mcVersion: "1.21.11",
@@ -173,9 +175,9 @@ function setTab(t) {
   tab = t; filter = "All"; $("q").value = "";
   history.replaceState(null, "", t === "mods" ? "#mods" : location.pathname + location.search);
   $("sort").innerHTML = SORTS[t].map(([v, l]) => `<option value="${v}">${l}</option>`).join("");
-  const authors = [...new Set(MODS.map(m => m.author).filter(Boolean))].sort();
+  const authors = [...new Set((t === "mods" ? MODS : PACKS).map(m => m.author).filter(Boolean))].sort();
   $("author").innerHTML = `<option value="">All authors</option>` + authors.map(a => `<option>${esc(a)}</option>`).join("");
-  $("author").hidden = t !== "mods" || authors.length < 2;
+  $("author").hidden = authors.length < 2;
   render();
 }
 
@@ -193,7 +195,7 @@ function render() {
 
   let list = data.filter(x =>
     (filter === "All" || keys(x).includes(filter)) &&
-    (tab !== "mods" || !au || x.author === au) &&
+    (!au || x.author === au) &&
     (!q || [x.name, x.description, x.author, ...(x.tags || [])].join(" ").toLowerCase().includes(q)));
   if (s === "az") list = [...list].sort((a, b) => a.name.localeCompare(b.name));
   if (s === "res") list = [...list].sort((a, b) => parseInt(b.resolution) - parseInt(a.resolution));
@@ -206,7 +208,7 @@ function render() {
       <div class="shot"${x.image ? ` style="background-image:url('${esc(u(x.image))}')"` : ""}>${x.image ? "" : tab === "mods" ? "⚙️" : "🧱"}</div>
       <div class="body">
         <h3>${esc(x.name)}</h3>
-        ${tab === "mods" && x.author ? `<div class="by">by ${link(x.author, x.authorUrl)}</div>` : ""}
+        ${x.author ? `<div class="by">by ${link(x.author, x.authorUrl)}</div>` : ""}
         <div class="meta">
           ${tab === "mods"
             ? `${x.loader ? `<span class="tag ldr">${esc(x.loader)}</span>` : ""}${x.mcVersion ? `<span class="tag">MC ${esc(x.mcVersion)}</span>` : ""}${x.side ? `<span class="tag">${esc(x.side)}</span>` : ""}`
