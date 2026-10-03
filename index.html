@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Texture Packs</title>
+
+<!--
+=====================================================================
+  HOW TO ADD A TEXTURE PACK
+  1. Put the pack's .zip in the  downloads/  folder   (next to this file)
+  2. Put a screenshot in the     images/     folder
+  3. Copy one block in the PACKS list below, paste it at the TOP of
+     the list, and change the values. Save. Refresh the page. Done.
+
+  Folder layout:
+      index.html
+      downloads/  MyPack-1.0.zip
+      images/     mypack.png
+
+  Instead of a local file, "file" can also be a full link
+  (CurseForge, Modrinth, Google Drive, GitHub, ...).
+=====================================================================
+-->
+
+<style>
+:root{--bg:#f3f1ea;--card:#fff;--ink:#1d2417;--mut:#667060;--line:#dcd8cb;--acc:#4a9a2e;--acc2:#2f6f1b;--chip:#e9efe2}
+@media (prefers-color-scheme:dark){:root{--bg:#15190f;--card:#1f2517;--ink:#eef2e6;--mut:#a0aa94;--line:#2f3824;--acc:#6cc24a;--acc2:#8edb6c;--chip:#2a331f}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{padding:48px 20px 28px;text-align:center;border-bottom:4px solid var(--acc);background:repeating-conic-gradient(var(--chip) 0 25%,transparent 0 50%) 0 0/32px 32px}
+h1{margin:0;font:800 clamp(28px,6vw,46px)/1.1 "Courier New",monospace;letter-spacing:-1px}
+header p{margin:10px auto 0;max-width:560px;color:var(--mut)}
+main{max-width:1100px;margin:0 auto;padding:20px}
+input,select{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px 11px}
+.bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+.bar input{flex:1 1 220px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:5px 12px;font-size:14px;cursor:pointer}
+.chip.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.shot{aspect-ratio:16/9;background:var(--chip) center/cover;display:flex;align-items:center;justify-content:center;font-size:40px}
+.body{padding:14px;display:flex;flex-direction:column;gap:8px;flex:1}
+.body h3{margin:0;font-size:19px}
+.meta{display:flex;flex-wrap:wrap;gap:6px}
+.tag{background:var(--chip);border-radius:6px;padding:2px 8px;font-size:12.5px;color:var(--mut)}
+.tag.res{background:var(--acc);color:#fff;font-weight:700}
+.desc{color:var(--mut);font-size:14.5px;margin:0;flex:1}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+.btn{display:inline-block;background:var(--acc);color:#fff;border-radius:8px;padding:9px 16px;font-weight:600;font-size:15px;text-decoration:none}
+.btn:hover{background:var(--acc2)}
+.btn.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.empty{text-align:center;color:var(--mut);padding:60px 10px}
+footer{text-align:center;color:var(--mut);font-size:13px;padding:30px}
+</style>
+</head>
+<body>
+<header>
+  <h1>⛏ My Texture Packs</h1>
+  <p>Every pack I've made, in one place. Pick one and grab the download.</p>
+</header>
+<main>
+  <div class="bar">
+    <input id="q" type="search" placeholder="Search packs…">
+    <select id="sort">
+      <option value="list">Order in list</option>
+      <option value="az">A → Z</option>
+      <option value="res">Resolution</option>
+    </select>
+  </div>
+  <div class="chips" id="chips"></div>
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" hidden>No packs found.</div>
+</main>
+<footer>Not affiliated with Mojang or Microsoft. Minecraft is a trademark of Mojang Studios.</footer>
+
+<script>
+/* ===================================================================
+   EDIT HERE: your texture packs. Newest first (top of the list).
+   Copy a { ... }, block, paste it above the others, change the values.
+   Leave a field as "" if you don't need it.
+   =================================================================== */
+const PACKS = [
+  {
+    name: "Example Pack (delete me)",
+    description: "Replace this with a short description of your pack.",
+    resolution: "16x",
+    version: "1.0",
+    mcVersion: "1.21",
+    edition: "Java",                       // Java, Bedrock, or Both
+    tags: ["PvP", "Cartoon"],              // used for the filter buttons
+    image: "",                             // e.g. "images/mypack.png"
+    file: "",                              // e.g. "downloads/MyPack-1.0.zip" or a https:// link
+    file2: "",                             // optional 2nd download (e.g. Bedrock version)
+    file2Label: ""                         // button text for the 2nd download, e.g. "Bedrock"
+  },
+];
+/* =================================================================== */
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const keys = p => [p.resolution, p.edition, ...(p.tags || [])].filter(Boolean);
+let filter = "All";
+
+function render() {
+  const q = $("q").value.toLowerCase().trim();
+  const all = ["All", ...new Set(PACKS.flatMap(keys))];
+  $("chips").innerHTML = all.map(t =>
+    `<button class="chip${t === filter ? " on" : ""}" data-t="${esc(t)}">${esc(t)}</button>`).join("");
+
+  let list = PACKS.filter(p =>
+    (filter === "All" || keys(p).includes(filter)) &&
+    (!q || [p.name, p.description, ...(p.tags || [])].join(" ").toLowerCase().includes(q)));
+
+  const s = $("sort").value;
+  if (s === "az") list = [...list].sort((a, b) => a.name.localeCompare(b.name));
+  if (s === "res") list = [...list].sort((a, b) => parseInt(b.resolution) - parseInt(a.resolution));
+
+  $("grid").innerHTML = list.map(p => `
+    <article class="card">
+      <div class="shot"${p.image ? ` style="background-image:url('${esc(p.image)}')"` : ""}>${p.image ? "" : "🧱"}</div>
+      <div class="body">
+        <h3>${esc(p.name)}</h3>
+        <div class="meta">
+          ${p.resolution ? `<span class="tag res">${esc(p.resolution)}</span>` : ""}
+          ${p.mcVersion ? `<span class="tag">MC ${esc(p.mcVersion)}</span>` : ""}
+          ${p.edition ? `<span class="tag">${esc(p.edition)}</span>` : ""}
+          ${p.version ? `<span class="tag">v${esc(p.version)}</span>` : ""}
+          ${(p.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join("")}
+        </div>
+        <p class="desc">${esc(p.description)}</p>
+        <div class="acts">
+          ${p.file ? `<a class="btn" href="${esc(p.file)}" download>⬇ Download</a>` : ""}
+          ${p.file2 ? `<a class="btn alt" href="${esc(p.file2)}" download>⬇ ${esc(p.file2Label || "Alt")}</a>` : ""}
+        </div>
+      </div>
+    </article>`).join("");
+  $("empty").hidden = list.length > 0;
+}
+
+$("chips").onclick = e => { const b = e.target.closest("[data-t]"); if (b) { filter = b.dataset.t; render(); } };
+$("q").oninput = render;
+$("sort").onchange = render;
+render();
+</script>
+</body>
+</html>
