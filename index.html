@@ -4,40 +4,43 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MC PACKS ON TOP</title>
+<!-- Site icon: favicon.png sits next to this file. Replace that file with your own image to change it. -->
+<link rel="icon" type="image/png" href="favicon.png">
 
 <!--
 =====================================================================
-  HOW TO ADD A TEXTURE PACK or a MOD
+  HOW TO ADD A TEXTURE PACK, MOD or SHADER
   1. Put the .zip / .jar in the   downloads/   folder (next to this file)
   2. Put a screenshot in the      images/      folder
-  3. Scroll to the PACKS or MODS list below, copy one { ... }, block,
-     paste it at the TOP of that list, change the values, save, refresh.
+  3. Scroll to the PACKS, MODS or SHADERS list below, copy one { ... },
+     block, paste it at the TOP of that list, change the values,
+     save, refresh.
 
   Folder layout:
       index.html
-      downloads/  MyPack-1.0.zip   CoolMod-1.0.jar
-      images/     mypack.png       coolmod.png
+      downloads/  MyPack-1.0.zip   CoolMod-1.0.jar   MyShader.zip
+      images/     mypack.png       coolmod.png        myshader.png
 
   "file" can also be a full link (CurseForge, Modrinth, GitHub, ...).
-  Link straight to a tab:  index.html#mods
+  Link straight to a tab:  index.html#mods   index.html#shaders
 =====================================================================
 -->
 
 <style>
-:root{--bg:#f3f1ea;--card:#fff;--ink:#1d2417;--mut:#667060;--line:#dcd8cb;--acc:#4a9a2e;--acc2:#2f6f1b;--chip:#e9efe2;--blue:#3b82c4}
-@media (prefers-color-scheme:dark){:root{--bg:#15190f;--card:#1f2517;--ink:#eef2e6;--mut:#a0aa94;--line:#2f3824;--acc:#6cc24a;--acc2:#8edb6c;--chip:#2a331f;--blue:#6aa9e0}}
+:root{--bg:#f3f1ea;--card:#fff;--ink:#1d2417;--mut:#667060;--line:#dcd8cb;--acc:#4a9a2e;--acc2:#2f6f1b;--chip:#e9efe2;--blue:#3b82c4;--purple:#8a5cc7}
+@media (prefers-color-scheme:dark){:root{--bg:#15190f;--card:#1f2517;--ink:#eef2e6;--mut:#a0aa94;--line:#2f3824;--acc:#6cc24a;--acc2:#8edb6c;--chip:#2a331f;--blue:#6aa9e0;--purple:#b08be6}}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
 a{color:var(--blue)}
 .contact{position:absolute;top:14px;right:16px;background:var(--acc);color:#fff;border-radius:8px;padding:8px 16px;font-weight:700;font-size:14.5px;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,.2)}
 .contact:hover{background:var(--acc2)}
 header{position:relative;padding:48px 20px 28px;text-align:center;border-bottom:4px solid var(--acc);background:repeating-conic-gradient(var(--chip) 0 25%,transparent 0 50%) 0 0/32px 32px}
-h1{margin:0;font:800 clamp(28px,6vw,46px)/1.1 "Courier New",monospace;letter-spacing:-1px}
+h1{margin:0;font:800 clamp(26px,5.5vw,44px)/1.1 "Courier New",monospace;letter-spacing:-1px}
 header p{margin:10px auto 0;max-width:600px;color:var(--mut)}
 main{max-width:1100px;margin:0 auto;padding:20px}
 input,select{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px 11px}
 .tabs{display:flex;gap:8px;margin-bottom:16px}
-.tab{flex:1;max-width:220px;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:10px;font:700 16px inherit;font-family:inherit;cursor:pointer}
+.tab{flex:1;max-width:220px;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:10px 6px;font:700 16px inherit;font-family:inherit;cursor:pointer}
 .tab.on{background:var(--acc);border-color:var(--acc);color:#fff}
 .tab small{opacity:.8;font-weight:500}
 .bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
@@ -55,6 +58,7 @@ input,select{font:inherit;color:var(--ink);background:var(--card);border:1px sol
 .tag{background:var(--chip);border-radius:6px;padding:2px 8px;font-size:12.5px;color:var(--mut)}
 .tag.res{background:var(--acc);color:#fff;font-weight:700}
 .tag.ldr{background:var(--blue);color:#fff;font-weight:700}
+.tag.shd{background:var(--purple);color:#fff;font-weight:700}
 .desc{color:var(--mut);font-size:14.5px;margin:0;flex:1}
 .acts{display:flex;gap:8px;flex-wrap:wrap}
 .btn{display:inline-block;background:var(--acc);color:#fff;border:1px solid var(--acc);border-radius:8px;padding:9px 16px;font:600 15px inherit;font-family:inherit;text-decoration:none;cursor:pointer}
@@ -79,14 +83,11 @@ footer{text-align:center;color:var(--mut);font-size:13px;padding:30px}
 <body>
 <header>
   <a class="contact" href="https://contact.mcpacks.site" target="_blank" rel="noopener">Contact Us</a>
-  <h1>⛏ PACKS &amp; MODS</h1>
-  <p>Every pack and mod I've made, in one place. Pick one and grab the download. message me to request your pack or mod on this site.</p>
+  <h1>⛏ PACKS, MODS &amp; SHADERS</h1>
+  <p>Everything I've made, in one place. Pick one and grab the download. message me to request your pack, mod or shader on this site.</p>
 </header>
 <main>
-  <div class="tabs">
-    <button class="tab" id="tab-packs" data-tab="packs"></button>
-    <button class="tab" id="tab-mods" data-tab="mods"></button>
-  </div>
+  <div class="tabs" id="tabs"></div>
   <div class="bar">
     <input id="q" type="search" placeholder="Search…">
     <select id="author" hidden></select>
@@ -108,55 +109,55 @@ footer{text-align:center;color:var(--mut);font-size:13px;padding:30px}
 const PACKS = [
   {
     name: "Hide bedrock",
-    author: "Zacharyvr22",                                                                        // who made it (shown as "by ..." + author filter)
-    authorUrl: "",                                                                               // optional link to their profile/page
+    author: "Zacharyvr22",                 // who made it (shown as "by ..." + author filter)
+    authorUrl: "",                         // optional link to their profile/page
     description: "This just hides bedrock. thats all...",
     resolution: "16x",
     version: "1",
     mcVersion: "1.21.11",
-    edition: "Java",                                                                         // Java, Bedrock, or Both
-    tags: ["Bedrock hider"],                                                                // used for the filter buttons
-    image: "images/hide bedrock.jpeg",                                                           // e.g. "images/mypack.png"
+    edition: "Java",                       // Java, Bedrock, or Both
+    tags: ["Bedrock hider"],               // used for the filter buttons
+    image: "images/hide bedrock.jpeg",     // e.g. "images/mypack.png"
     file: "downloads/§4 ! §c §k lol  §r  §5 Hide §b bedrock §r §c §k lol §r §4 !.zip",    // e.g. "downloads/MyPack-1.0.zip" or a https:// link
   },
   {
     name: "Hide cloud movement",
-    author: "Zacharyvr22",                                                                        // who made it (shown as "by ..." + author filter)
-    authorUrl: "",                                                                               // optional link to their profile/page
+    author: "Zacharyvr22",
+    authorUrl: "",
     description: "This just hides cloud movement. thats all...",
     resolution: "16x",
     version: "1",
     mcVersion: "1.21.11",
-    edition: "Java",                                                                         // Java, Bedrock, or Both
-    tags: ["cloud movement hider"],                                                                // used for the filter buttons
-    image: "images/hide clouds.jpeg",                                                           // e.g. "images/mypack.png"
-    file: "downloads/§4 ! §c §k lol  §r  §5 Hide §b cloud movement §r §c §k lol §r §4 !.zip",    // e.g. "downloads/MyPack-1.0.zip" or a https:// link
+    edition: "Java",
+    tags: ["cloud movement hider"],
+    image: "images/hide clouds.jpeg",
+    file: "downloads/§4 ! §c §k lol  §r  §5 Hide §b cloud movement §r §c §k lol §r §4 !.zip",
   },
   {
     name: "full bright",
-    author: "Zacharyvr22",                                                                        // who made it (shown as "by ..." + author filter)
-    authorUrl: "",                                                                               // optional link to their profile/page
+    author: "Zacharyvr22",
+    authorUrl: "",
     description: "allows you to see everything around you. even at night",
     resolution: "16x",
     version: "1",
     mcVersion: "1.21.11",
-    edition: "Java",                                                                         // Java, Bedrock, or Both
-    tags: ["vision"],                                                                // used for the filter buttons
-    image: "images/full bright.png",                                                           // e.g. "images/mypack.png"
-    file: "downloads/§4 ! §c §k lol  §r  §5 full §b bright §r §c §k lol §r §4 !.zip",    // e.g. "downloads/MyPack-1.0.zip" or a https:// link
+    edition: "Java",
+    tags: ["vision"],
+    image: "images/full bright.png",
+    file: "downloads/§4 ! §c §k lol  §r  §5 full §b bright §r §c §k lol §r §4 !.zip",
   },
   {
     name: "xray ultimate",
-    author: "Zacharyvr22",                                                                        // who made it (shown as "by ..." + author filter)
-    authorUrl: "",                                                                               // optional link to their profile/page
+    author: "Zacharyvr22",
+    authorUrl: "",
     description: "allows you to see ores without having a line of sight.",
     resolution: "16x",
     version: "1",
     mcVersion: "1.21.11",
-    edition: "Java",                                                                         // Java, Bedrock, or Both
-    tags: ["vision, xray"],                                                                // used for the filter buttons
-    image: "images/xray ultimate.png",                                                           // e.g. "images/mypack.png"
-    file: "downloads/§4 ! §c §k lol  §r  §5 Xray §b ultimate §r §c §k lol §r §4 !.zip",    // e.g. "downloads/MyPack-1.0.zip" or a https:// link
+    edition: "Java",
+    tags: ["vision", "xray"],
+    image: "images/xray ultimate.png",
+    file: "downloads/§4 ! §c §k lol  §r  §5 Xray §b ultimate §r §c §k lol §r §4 !.zip",
   },
 ];
 
@@ -193,6 +194,39 @@ const MODS = [
     page: ""                               // link to its CurseForge / Modrinth page
   },
 ];
+
+/* ===================================================================
+   EDIT HERE: SHADERS. Newest first. Copy a { ... }, block to add one.
+   Every field is optional except name. Delete the example when done.
+   =================================================================== */
+const SHADERS = [
+  {
+    name: "Example Shader (delete me)",
+    description: "One or two sentences shown on the card.",
+    longDescription: "Longer text shown in the Details window. Describe the look: water, shadows, clouds, etc.",
+    author: "Zacharyvr22",                 // who made it (shown as "by ..." + author filter)
+    authorUrl: "",                         // optional link to their profile/page
+    contributors: [                        // optional: everyone else who helped
+      { name: "FriendName", role: "Testing", url: "" }
+    ],
+    version: "1.0",
+    mcVersion: "1.21.11",
+    loader: "Iris",                        // Iris, OptiFine, or Both
+    performance: "Medium",                 // Low, Medium, High, or Ultra (how heavy it is on the PC)
+    license: "",
+    updated: "2026-10-03",                 // YYYY-MM-DD
+    tags: ["Realistic", "Water"],
+    requires: ["Iris Shaders (or OptiFine)"],
+    changelog: [
+      "1.0 - First release"
+    ],
+    image: "",                             // e.g. "images/myshader.png"
+    file: "",                              // e.g. "downloads/MyShader.zip" or a https:// link
+    file2: "", file2Label: "",             // optional 2nd download (e.g. a low-end version)
+    source: "",
+    page: ""
+  },
+];
 /* =================================================================== */
 
 const $ = id => document.getElementById(id);
@@ -201,64 +235,77 @@ const u = s => /^\s*javascript:/i.test(s || "") ? "" : (s || "");           // b
 const ext = s => /^https?:\/\//i.test(s);
 const dl = (s, label, cls = "") => s ? `<a class="btn ${cls}" href="${esc(u(s))}" ${ext(s) ? 'target="_blank" rel="noopener"' : "download"}>${label}</a>` : "";
 const link = (name, url) => url ? `<a href="${esc(u(url))}" target="_blank" rel="noopener">${esc(name)}</a>` : esc(name);
+const T = (cls, v) => v ? `<span class="tag ${cls}">${esc(v)}</span>` : "";
+const PERF = { low: 1, medium: 2, high: 3, ultra: 4 };
+const perfRank = x => PERF[(x.performance || "").toLowerCase()] || 9;
 
-const keysP = p => [p.resolution, p.edition, ...(p.tags || [])].filter(Boolean);
-const keysM = m => [m.loader, m.side, m.mcVersion && "MC " + m.mcVersion, ...(m.tags || [])].filter(Boolean);
-const SORTS = {
-  packs: [["list", "Order in list"], ["az", "A → Z"], ["res", "Resolution"]],
-  mods:  [["list", "Order in list"], ["az", "A → Z"], ["new", "Recently updated"], ["author", "Author"]]
+const TYPES = {
+  packs: {
+    label: "Texture Packs", data: PACKS, icon: "🧱", detail: false,
+    keys: p => [p.resolution, p.edition, ...(p.tags || [])].filter(Boolean),
+    meta: p => T("res", p.resolution) + T("", p.mcVersion && "MC " + p.mcVersion) + T("", p.edition),
+    sorts: [["list", "Order in list"], ["az", "A → Z"], ["res", "Resolution"]]
+  },
+  mods: {
+    label: "Mods", data: MODS, icon: "⚙️", detail: true, thing: "Mod",
+    keys: m => [m.loader, m.side, m.mcVersion && "MC " + m.mcVersion, ...(m.tags || [])].filter(Boolean),
+    meta: m => T("ldr", m.loader) + T("", m.mcVersion && "MC " + m.mcVersion) + T("", m.side),
+    sorts: [["list", "Order in list"], ["az", "A → Z"], ["new", "Recently updated"], ["author", "Author"]]
+  },
+  shaders: {
+    label: "Shaders", data: SHADERS, icon: "🌅", detail: true, thing: "Shader",
+    keys: s => [s.loader, s.performance && s.performance + " performance", s.mcVersion && "MC " + s.mcVersion, ...(s.tags || [])].filter(Boolean),
+    meta: s => T("shd", s.loader) + T("", s.performance && s.performance + " perf") + T("", s.mcVersion && "MC " + s.mcVersion),
+    sorts: [["list", "Order in list"], ["az", "A → Z"], ["perf", "Lightest first"], ["new", "Recently updated"], ["author", "Author"]]
+  }
 };
-let tab = location.hash === "#mods" ? "mods" : "packs", filter = "All", visibleMods = [];
+const tabFromHash = () => TYPES[location.hash.slice(1)] ? location.hash.slice(1) : "packs";
+let tab = tabFromHash(), filter = "All", visible = [];
 
 function setTab(t) {
   tab = t; filter = "All"; $("q").value = "";
-  history.replaceState(null, "", t === "mods" ? "#mods" : location.pathname + location.search);
-  $("sort").innerHTML = SORTS[t].map(([v, l]) => `<option value="${v}">${l}</option>`).join("");
-  const authors = [...new Set((t === "mods" ? MODS : PACKS).map(m => m.author).filter(Boolean))].sort();
+  history.replaceState(null, "", t === "packs" ? location.pathname + location.search : "#" + t);
+  $("sort").innerHTML = TYPES[t].sorts.map(([v, l]) => `<option value="${v}">${l}</option>`).join("");
+  const authors = [...new Set(TYPES[t].data.map(m => m.author).filter(Boolean))].sort();
   $("author").innerHTML = `<option value="">All authors</option>` + authors.map(a => `<option>${esc(a)}</option>`).join("");
   $("author").hidden = authors.length < 2;
   render();
 }
 
 function render() {
-  $("tab-packs").innerHTML = `Texture Packs <small>(${PACKS.length})</small>`;
-  $("tab-mods").innerHTML = `Mods <small>(${MODS.length})</small>`;
-  $("tab-packs").classList.toggle("on", tab === "packs");
-  $("tab-mods").classList.toggle("on", tab === "mods");
+  $("tabs").innerHTML = Object.entries(TYPES).map(([k, t]) =>
+    `<button class="tab${k === tab ? " on" : ""}" data-tab="${k}">${t.label} <small>(${t.data.length})</small></button>`).join("");
 
-  const data = tab === "mods" ? MODS : PACKS, keys = tab === "mods" ? keysM : keysP;
+  const T0 = TYPES[tab], data = T0.data;
   const q = $("q").value.toLowerCase().trim(), au = $("author").value, s = $("sort").value;
-  const all = ["All", ...new Set(data.flatMap(keys))];
+  const all = ["All", ...new Set(data.flatMap(T0.keys))];
   if (!all.includes(filter)) filter = "All";
   $("chips").innerHTML = all.map(t => `<button class="chip${t === filter ? " on" : ""}" data-t="${esc(t)}">${esc(t)}</button>`).join("");
 
   let list = data.filter(x =>
-    (filter === "All" || keys(x).includes(filter)) &&
+    (filter === "All" || T0.keys(x).includes(filter)) &&
     (!au || x.author === au) &&
     (!q || [x.name, x.description, x.author, ...(x.tags || [])].join(" ").toLowerCase().includes(q)));
   if (s === "az") list = [...list].sort((a, b) => a.name.localeCompare(b.name));
   if (s === "res") list = [...list].sort((a, b) => parseInt(b.resolution) - parseInt(a.resolution));
+  if (s === "perf") list = [...list].sort((a, b) => perfRank(a) - perfRank(b));
   if (s === "new") list = [...list].sort((a, b) => (b.updated || "").localeCompare(a.updated || ""));
   if (s === "author") list = [...list].sort((a, b) => (a.author || "").localeCompare(b.author || ""));
-  visibleMods = tab === "mods" ? list : [];
+  visible = list;
 
   $("grid").innerHTML = list.map((x, i) => `
     <article class="card">
-      <div class="shot"${x.image ? ` style="background-image:url('${esc(u(x.image))}')"` : ""}>${x.image ? "" : tab === "mods" ? "⚙️" : "🧱"}</div>
+      <div class="shot"${x.image ? ` style="background-image:url('${esc(u(x.image))}')"` : ""}>${x.image ? "" : T0.icon}</div>
       <div class="body">
         <h3>${esc(x.name)}</h3>
         ${x.author ? `<div class="by">by ${link(x.author, x.authorUrl)}</div>` : ""}
         <div class="meta">
-          ${tab === "mods"
-            ? `${x.loader ? `<span class="tag ldr">${esc(x.loader)}</span>` : ""}${x.mcVersion ? `<span class="tag">MC ${esc(x.mcVersion)}</span>` : ""}${x.side ? `<span class="tag">${esc(x.side)}</span>` : ""}`
-            : `${x.resolution ? `<span class="tag res">${esc(x.resolution)}</span>` : ""}${x.mcVersion ? `<span class="tag">MC ${esc(x.mcVersion)}</span>` : ""}${x.edition ? `<span class="tag">${esc(x.edition)}</span>` : ""}`}
-          ${x.version ? `<span class="tag">v${esc(x.version)}</span>` : ""}
-          ${(x.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join("")}
+          ${T0.meta(x)}${T("", x.version && "v" + x.version)}${(x.tags || []).map(t => T("", t)).join("")}
         </div>
         <p class="desc">${esc(x.description)}</p>
         <div class="acts">
           ${dl(x.file, "⬇ Download")}${dl(x.file2, "⬇ " + esc(x.file2Label || "Alt"), "alt")}
-          ${tab === "mods" ? `<button class="btn alt" data-i="${i}">Details</button>` : ""}
+          ${T0.detail ? `<button class="btn alt" data-i="${i}">Details</button>` : ""}
         </div>
       </div>
     </article>`).join("");
@@ -267,6 +314,7 @@ function render() {
 
 function details(m) {
   const fact = (k, v) => v ? `<div class="fact"><span>${k}</span>${esc(v)}</div>` : "";
+  const thing = TYPES[tab].thing;
   const people = [];
   if (m.author) people.push([m.author, "Author", m.authorUrl]);
   (m.contributors || []).forEach(c => people.push([c.name, c.role || "Contributor", c.url]));
@@ -274,25 +322,25 @@ function details(m) {
     <h2>${esc(m.name)}</h2>
     ${m.author ? `<div class="by" style="margin:2px 0 0">by ${link(m.author, m.authorUrl)}</div>` : ""}
     <p>${esc(m.longDescription || m.description)}</p>
-    <div class="facts">${fact("Version", m.version)}${fact("Minecraft", m.mcVersion)}${fact("Loader", m.loader)}${fact("Runs on", m.side)}${fact("License", m.license)}${fact("Updated", m.updated)}</div>
+    <div class="facts">${fact("Version", m.version)}${fact("Minecraft", m.mcVersion)}${fact(tab === "shaders" ? "Works with" : "Loader", m.loader)}${fact("Runs on", m.side)}${fact("Performance", m.performance)}${fact("License", m.license)}${fact("Updated", m.updated)}</div>
     ${(m.requires || []).length ? `<h4>Requires</h4><ul>${m.requires.map(r => `<li>${esc(r)}</li>`).join("")}</ul>` : ""}
     ${people.length ? `<h4>Credits</h4><table>${people.map(p => `<tr><td>${link(p[0], p[2])}</td><td>${esc(p[1])}</td></tr>`).join("")}</table>` : ""}
     ${(m.changelog || []).length ? `<h4>Changelog</h4><ul>${m.changelog.map(c => `<li>${esc(c)}</li>`).join("")}</ul>` : ""}
     <div class="acts" style="margin-top:20px">
       ${dl(m.file, "⬇ Download")}${dl(m.file2, "⬇ " + esc(m.file2Label || "Alt"), "alt")}
-      ${m.page ? `<a class="btn alt" href="${esc(u(m.page))}" target="_blank" rel="noopener">Mod page</a>` : ""}
+      ${m.page ? `<a class="btn alt" href="${esc(u(m.page))}" target="_blank" rel="noopener">${thing} page</a>` : ""}
       ${m.source ? `<a class="btn alt" href="${esc(u(m.source))}" target="_blank" rel="noopener">Source code</a>` : ""}
       <button class="btn alt" style="margin-left:auto" onclick="$('dlg').close()">Close</button>
     </div>`;
   $("dlg").showModal();
 }
 
-document.querySelectorAll(".tab").forEach(b => b.onclick = () => setTab(b.dataset.tab));
+$("tabs").onclick = e => { const b = e.target.closest("[data-tab]"); if (b) setTab(b.dataset.tab); };
 $("chips").onclick = e => { const b = e.target.closest("[data-t]"); if (b) { filter = b.dataset.t; render(); } };
-$("grid").onclick = e => { const b = e.target.closest("[data-i]"); if (b) details(visibleMods[+b.dataset.i]); };
+$("grid").onclick = e => { const b = e.target.closest("[data-i]"); if (b) details(visible[+b.dataset.i]); };
 $("dlg").onclick = e => { if (e.target === $("dlg")) $("dlg").close(); };
 $("q").oninput = render; $("sort").onchange = render; $("author").onchange = render;
-window.onhashchange = () => setTab(location.hash === "#mods" ? "mods" : "packs");
+window.onhashchange = () => setTab(tabFromHash());
 setTab(tab);
 </script>
 </body>
